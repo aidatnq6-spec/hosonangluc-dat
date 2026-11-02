@@ -1,0 +1,687 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Nguyễn Quang Đạt</title>
+<meta name="description" content="Đồng sáng lập Vi-Tech. 15 năm đồng hành cùng doanh nghiệp về Chữ ký số, Hóa đơn điện tử. Giúp doanh nghiệp vận hành bằng quy trình, dữ liệu và AI.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Be+Vietnam+Pro:wght@400;500;600&display=swap">
+<style>
+/* Layout: mobile-first, một cột thoáng; desktop: hero chia đôi chữ | ảnh vuông nguyên khung. Giao diện Navy cố định (chọn có chủ đích), vàng cam làm điểm nhấn. */
+:root{
+  --navy:#101A6B; --navy-deep:#0B1459; --navy-up:#1A2580; --gold:#F9B508;
+  --white:#FFFFFF; --text:#EEF0FA; --muted:#C3C8E6; --line:rgba(255,255,255,.14);
+  --f-head:"Montserrat","Segoe UI",Arial,sans-serif;
+  --f-body:"Be Vietnam Pro","Segoe UI",Roboto,Arial,sans-serif;
+  --bar-h:58px;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{background:var(--navy);color:var(--text);font-family:var(--f-body);font-size:17px;line-height:1.8;font-weight:400}
+.wrap{max-width:1120px;margin:0 auto;padding-left:max(22px,env(safe-area-inset-left,0px));padding-right:max(22px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--f-head);color:var(--white);margin:0;text-wrap:balance;line-height:1.35}
+p{margin:0}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:4px}
+
+/* HERO */
+.hero{background:var(--navy-deep);border-bottom:1px solid var(--line)}
+.hero-grid{display:grid;grid-template-columns:1fr}
+.hero{overflow:hidden}
+.hero-photo{order:-1;position:relative;width:100vw;max-width:none;margin-left:calc(50% - 50vw);aspect-ratio:4/3;overflow:hidden}
+.hero-photo::after{content:"";position:absolute;left:0;right:0;bottom:0;height:18%;background:linear-gradient(180deg,rgba(11,20,89,0),var(--navy-deep));pointer-events:none}
+.hero-photo img{width:100%;height:100%;object-fit:cover;object-position:0% 38%;display:block;transform-origin:20% 50%;transition:transform .8s ease}
+.hero-text{padding-block:36px 64px;display:grid;gap:26px}
+.brand{display:flex;align-items:center;gap:14px}
+.logo{background:#fff;border-radius:8px;padding:6px 10px;display:inline-flex;line-height:0;flex:none}
+.logo img{height:44px;width:auto;display:block}
+.name{font-family:var(--f-head);font-weight:700;font-size:20px;color:var(--white);line-height:1.3}
+.role{font-size:14px;color:var(--muted);line-height:1.5;margin-top:4px}
+.rule{width:56px;height:2px;background:var(--gold)}
+.hero h1{font-size:clamp(27px,7vw,44px);font-weight:700;letter-spacing:-.005em;line-height:1.3}
+.hero h1 em{font-style:normal;color:var(--gold)}
+.lede{font-size:17px;color:var(--text)}
+.btns{display:grid;gap:12px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:15px 24px;border-radius:999px;font-family:var(--f-head);font-weight:600;font-size:15px;text-decoration:none;border:1px solid transparent;letter-spacing:.02em;transition:background-color .25s,color .25s,border-color .25s,transform .25s}
+.btn svg{width:18px;height:18px;flex:none}
+.btn-gold{background:var(--gold);color:var(--navy-deep)}
+.btn-gold:hover{background:#fff;color:var(--navy-deep)}
+.btn-line{border-color:rgba(249,181,8,.7);color:var(--gold);background:transparent}
+button.btn{cursor:pointer}
+.btn-line:hover{background:var(--gold);color:var(--navy-deep);border-color:var(--gold)}
+.btn-soft{border-color:rgba(255,255,255,.35);color:var(--white)}
+.btn-soft:hover{background:#fff;color:var(--navy-deep);border-color:#fff}
+
+/* SECTIONS */
+section.block{padding-block:80px;border-bottom:1px solid var(--line)}
+.alt{background:var(--navy-deep)}
+.sec-head{display:grid;gap:14px;margin-bottom:44px;max-width:720px}
+.kicker{font-family:var(--f-head);font-size:12.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-weight:600}
+.sec-head h2{font-size:clamp(24px,5.6vw,34px);font-weight:700}
+.sec-head p{color:var(--muted)}
+
+/* ABOUT */
+.about{display:grid;gap:52px;max-width:760px}
+.prose{display:grid;gap:22px;max-width:64ch}
+.prose strong{color:var(--gold);font-weight:600}
+.tl-title,.steps-title{font-family:var(--f-head);font-size:12.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:22px}
+.timeline{list-style:none;margin:0;padding:0}
+.timeline li{position:relative;padding:0 0 30px 28px;border-left:1px solid rgba(249,181,8,.4)}
+.timeline li:last-child{padding-bottom:0;border-left-color:transparent}
+.timeline li::before{content:"";position:absolute;left:-6px;top:7px;width:11px;height:11px;border-radius:50%;background:var(--navy);border:2px solid var(--gold)}
+.timeline li.now::before{background:var(--gold)}
+.timeline h3{font-size:16px;font-weight:700}
+.timeline p{font-size:15.5px;color:var(--muted);margin-top:4px;line-height:1.65}
+
+/* BENTO */
+.bento{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:60px}
+.cell{background:var(--navy-up);border:1px solid var(--line);border-radius:18px;padding:22px 20px;display:grid;align-content:space-between;gap:18px;min-height:140px;transition:transform .3s,border-color .3s}
+.cell:hover{transform:translateY(-3px);border-color:rgba(249,181,8,.5)}
+.cell b{font-family:var(--f-head);font-weight:700;font-size:46px;line-height:1;color:var(--white);font-variant-numeric:tabular-nums}
+.cell b small{font-size:14px;font-weight:600;color:var(--gold);margin-left:6px;letter-spacing:.06em}
+.cell span{font-size:15px;color:var(--muted);line-height:1.5}
+.cell b .num{font:inherit;color:inherit;line-height:inherit}
+.cell.wide{grid-column:1/-1}
+.cell.hero-cell{grid-column:1/-1;background:linear-gradient(135deg,#F9B508 0%,#E8A200 100%);border-color:transparent;min-height:170px}
+.cell.hero-cell b{font-size:72px;color:var(--navy-deep)}
+.cell.hero-cell b small{color:var(--navy-deep);font-size:18px}
+.cell.hero-cell span{color:var(--navy-deep);font-weight:600;font-size:16px}
+
+/* SERVICES */
+.services{display:grid;gap:18px}
+.svc{background:var(--navy-up);border:1px solid var(--line);border-radius:18px;padding:30px 24px;display:flex;flex-direction:column;gap:16px;transition:transform .3s,border-color .3s}
+.svc:hover{transform:translateY(-3px);border-color:rgba(249,181,8,.5)}
+.svc-top{display:flex;justify-content:space-between;align-items:center;gap:10px;min-height:26px}
+.svc-no{font-family:var(--f-head);font-size:14px;color:var(--gold);font-weight:700;letter-spacing:.08em}
+.tag{font-family:var(--f-head);font-size:12px;font-weight:600;padding:4px 12px;border-radius:999px;border:1px solid var(--gold);color:var(--gold);white-space:nowrap}
+.svc h3{font-size:20px;font-weight:700}
+.svc p{font-size:16px;color:var(--muted);line-height:1.75}
+.svc .gain{margin-top:auto;padding-top:16px;border-top:1px solid var(--line);font-size:15.5px;color:var(--text)}
+.svc .gain b{color:var(--gold);font-weight:600}
+
+/* WAY OF WORKING */
+.dna{display:grid;gap:24px}
+.dna>div{border-left:2px solid var(--gold);padding:4px 0 4px 20px}
+.dna h3{font-size:20px;font-weight:700;margin-bottom:6px}
+.dna p{font-size:16px;color:var(--muted)}
+.principle{margin:56px 0;padding:28px 24px;border-radius:18px;background:var(--navy-up);border:1px solid rgba(249,181,8,.4);font-family:var(--f-head);font-weight:600;color:var(--white);font-size:clamp(19px,4.8vw,24px);line-height:1.5;text-wrap:balance}
+.principle span{color:var(--gold)}
+.steps{list-style:none;margin:0;padding:0;display:grid;gap:14px;counter-reset:s}
+.steps li{counter-increment:s;display:grid;grid-template-columns:44px 1fr;gap:2px 16px;align-items:start;padding:18px;border:1px solid var(--line);border-radius:16px}
+.steps li::before{content:counter(s);grid-row:span 2;width:44px;height:44px;border-radius:50%;background:var(--gold);color:var(--navy-deep);font-family:var(--f-head);font-weight:700;font-size:18px;display:grid;place-items:center}
+.steps h3{font-size:17px;font-weight:700}
+.steps p{font-size:15.5px;color:var(--muted);line-height:1.6}
+
+/* CONTACT */
+.c-grid{display:grid;gap:14px}
+.c-item{background:var(--navy-up);border:1px solid var(--line);border-radius:18px;padding:22px;display:grid;gap:8px;align-content:start;min-width:0}
+.c-label{font-family:var(--f-head);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.c-val{font-family:var(--f-head);font-size:20px;font-weight:700;color:var(--white);overflow-wrap:anywhere;line-height:1.4}
+.c-note{font-size:15.5px;color:var(--muted)}
+.c-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.mini{font-family:var(--f-head);font-size:13.5px;padding:10px 16px;border-radius:999px;border:1px solid rgba(255,255,255,.35);background:transparent;color:var(--white);text-decoration:none;font-weight:600;cursor:pointer;transition:background-color .25s,color .25s,border-color .25s}
+.mini:hover{background:#fff;color:var(--navy-deep);border-color:#fff}
+.mini.solid{background:var(--gold);color:var(--navy-deep);border-color:var(--gold)}
+.mini.solid:hover{background:#fff;border-color:#fff}
+footer{background:var(--navy-deep);padding-block:32px}
+.foot{display:flex;align-items:center;gap:14px 18px;flex-wrap:wrap;font-size:14px;color:var(--muted)}
+.foot .logo img{height:32px}
+.foot a{color:var(--gold);text-decoration:none}
+.foot a:hover{text-decoration:underline}
+
+
+/* TOP NAV */
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:31;background:rgba(11,20,89,.96)}
+.topnav{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:rgba(11,20,89,.94);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav-in{display:flex;align-items:center;justify-content:space-between;gap:16px;height:60px}
+.nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none;min-width:0;transition:opacity .3s,transform .3s}
+.nav-brand.off{opacity:0;transform:translateY(-6px);pointer-events:none}
+.nav-brand .logo{padding:3px 6px;border-radius:6px}
+.nav-brand .logo img{height:26px}
+.nav-brand span{font-family:var(--f-head);font-weight:700;font-size:15px;color:var(--white);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nav-links{display:none;align-items:center;gap:26px}
+.nav-links a{font-family:var(--f-head);font-weight:600;font-size:13.5px;color:var(--muted);text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--gold)}
+.nav-cta{display:none}
+.nav-toggle{width:42px;height:42px;border-radius:10px;border:1px solid var(--line);background:transparent;color:var(--white);display:grid;place-items:center;cursor:pointer;flex:none}
+.nav-toggle svg{width:20px;height:20px}
+.nav-menu{border-top:1px solid var(--line);padding-block:8px 16px}
+.nav-menu a{display:block;padding:12px 2px;font-family:var(--f-head);font-weight:600;font-size:15px;color:var(--text);text-decoration:none;border-bottom:1px solid var(--line)}
+.nav-menu a:last-child{border-bottom:0;color:var(--gold)}
+section.block,header.hero{scroll-margin-top:60px}
+
+/* JOURNEY */
+.journey{list-style:none;margin:0;padding:0;display:grid;gap:0;counter-reset:j}
+.journey li{position:relative;padding:0 0 34px 34px;border-left:1px solid rgba(249,181,8,.4)}
+.journey li:last-child{padding-bottom:0;border-left-color:transparent}
+.journey li::before{content:"";position:absolute;left:-7px;top:6px;width:13px;height:13px;border-radius:50%;background:var(--navy-deep);border:2px solid var(--gold)}
+.journey li.now::before{background:var(--gold)}
+.journey .stage{font-family:var(--f-head);font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);font-weight:600}
+.journey h3{font-size:18px;font-weight:700;margin-top:4px}
+.journey p{font-size:15.5px;color:var(--muted);margin-top:6px;line-height:1.65}
+.train{margin-top:44px;padding-top:28px;border-top:1px solid var(--line)}
+.train-title{font-family:var(--f-head);font-size:12.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:18px}
+.train-grid{display:grid;gap:14px}
+.train-item{display:grid;gap:4px;border-left:2px solid var(--gold);padding:2px 0 2px 18px}
+.train-k{font-family:var(--f-head);font-weight:700;font-size:16px;color:var(--white)}
+.train-item p{font-size:15.5px;color:var(--muted)}
+.svc .basis-h{font-family:var(--f-head);font-weight:700;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.svc .basis ul{margin:0;padding-left:18px;display:grid;gap:6px}
+.svc .basis b{color:var(--white);font-weight:600}
+.svc .basis{font-size:14.5px;color:var(--text);background:rgba(249,181,8,.08);border:1px solid rgba(249,181,8,.25);border-radius:10px;padding:10px 14px;line-height:1.6}
+
+/* CLOSE BUTTON ON BAR */
+.mbar{grid-template-columns:1fr 1fr 34px !important;align-items:center}
+.mbar button.x{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:transparent;color:var(--muted);display:grid;place-items:center;cursor:pointer;padding:0}
+.mbar button.x svg{width:14px;height:14px}
+body.bar-closed{padding-bottom:0}
+
+/* CALL SHEET */
+.sheet-bg{position:fixed;inset:0;z-index:40;background:rgba(4,8,40,.6);display:flex;align-items:flex-end;justify-content:center}
+.sheet{width:100%;max-width:480px;background:var(--navy-up);border:1px solid rgba(249,181,8,.35);border-radius:20px 20px 0 0;
+  padding:22px max(22px,env(safe-area-inset-right,0px)) calc(22px + env(safe-area-inset-bottom,0px)) max(22px,env(safe-area-inset-left,0px));display:grid;gap:14px;text-align:center}
+.sheet-l{font-family:var(--f-head);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.sheet-n{font-family:var(--f-head);font-weight:700;font-size:30px;color:var(--white);letter-spacing:.02em;user-select:all;font-variant-numeric:tabular-nums}
+.sheet-acts{display:grid;gap:10px}
+.sheet-acts a,.sheet-acts button{height:48px;border-radius:999px;font-family:var(--f-head);font-weight:700;font-size:15px;display:flex;align-items:center;justify-content:center;text-decoration:none;cursor:pointer}
+.sheet .s1{background:var(--gold);color:var(--navy-deep);border:0}
+.sheet .s2{background:transparent;color:var(--gold);border:1px solid rgba(249,181,8,.7)}
+.sheet .s3{background:transparent;color:var(--muted);border:0;height:40px;font-weight:600}
+.sheet-note{font-size:13.5px;color:var(--muted);line-height:1.55}
+@media (min-width:720px){.sheet-bg{align-items:center}.sheet{border-radius:20px}}
+
+/* FORM ĐĂNG KÝ */
+.sheet.reg{max-height:92vh;overflow-y:auto;text-align:left;gap:16px}
+.reg .sheet-l{text-align:center}
+.form-intro{font-size:15px;color:var(--muted);text-align:center;margin-top:-6px}
+.reg form{display:grid;gap:14px}
+.fld{display:grid;gap:6px}
+.fld>span{font-family:var(--f-head);font-weight:600;font-size:13.5px;color:var(--white)}
+.fld i{font-style:normal;color:var(--gold)}
+.fld input,.fld select{width:100%;height:48px;border-radius:12px;border:1px solid rgba(255,255,255,.25);background:var(--navy-deep);color:var(--white);
+  font-family:var(--f-body);font-size:16px;padding:0 14px;outline:none;transition:border-color .2s}
+.fld select{appearance:none;-webkit-appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--gold) 50%),linear-gradient(135deg,var(--gold) 50%,transparent 50%);
+  background-position:calc(100% - 20px) 21px,calc(100% - 15px) 21px;background-size:5px 5px;background-repeat:no-repeat;padding-right:40px}
+.fld select option{color:#111;background:#fff}
+.fld input::placeholder{color:rgba(195,200,230,.55)}
+.fld input:focus,.fld select:focus{border-color:var(--gold)}
+.fld.bad input,.fld.bad select{border-color:#FF8A80}
+.fld small{font-size:13px;color:#FFB4AB;min-height:0}
+.fld small:empty{display:none}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.agree{display:grid;grid-template-columns:22px 1fr;gap:10px;align-items:start;font-size:13.5px;color:var(--muted);line-height:1.55;cursor:pointer}
+.agree input{width:20px;height:20px;margin:1px 0 0;accent-color:var(--gold)}
+.agree.bad span{color:#FFB4AB}
+.form-err{font-size:14px;color:#FFB4AB;background:rgba(255,138,128,.1);border:1px solid rgba(255,138,128,.35);border-radius:10px;padding:10px 12px}
+.reg button[disabled]{opacity:.6;cursor:wait}
+.reg-done{display:grid;gap:12px;text-align:center;padding-block:10px}
+.reg-done .ok{width:56px;height:56px;border-radius:50%;background:var(--gold);color:var(--navy-deep);display:grid;place-items:center;margin:0 auto}
+.reg-done .ok svg{width:28px;height:28px}
+.reg-done h3{font-size:20px}
+.reg-done p{color:var(--muted);font-size:15px}
+
+/* MOBILE BOTTOM BAR */
+.mbar{position:fixed;left:0;right:0;bottom:0;z-index:20;display:grid;grid-template-columns:1fr 1fr;gap:8px;
+  padding:7px max(12px,env(safe-area-inset-right,0px)) calc(7px + env(safe-area-inset-bottom,0px)) max(12px,env(safe-area-inset-left,0px));
+  background:rgba(11,20,89,.94);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-top:1px solid rgba(249,181,8,.25)}
+.mbar a,.mbar button.c{display:flex;cursor:pointer;background:transparent;align-items:center;justify-content:center;gap:7px;height:42px;border-radius:999px;font-family:var(--f-head);font-weight:700;font-size:14px;text-decoration:none;transition:background-color .25s,color .25s}
+.mbar .z{background:var(--gold);color:var(--navy-deep)}
+.mbar .c{border:1px solid rgba(249,181,8,.7);color:var(--gold)}
+.mbar button.c:active,.mbar a:active{background:#fff;color:var(--navy-deep)}
+.mbar svg{width:17px;height:17px;flex:none}
+body{padding-bottom:calc(var(--bar-h) + env(safe-area-inset-bottom,0px))}
+
+/* REVEAL (chỉ áp dụng cho phần chưa nằm trong màn hình lúc tải) */
+.rv{transition:transform .7s ease,opacity .7s ease}
+.rv.pre{transform:translateY(24px);opacity:.25}
+
+/* TABLET / DESKTOP */
+@media (min-width:720px){
+  body{font-size:17.5px}
+  .btns{display:flex;flex-wrap:wrap}
+  .bento{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .train-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:28px}
+  .cell.hero-cell{grid-column:span 2;grid-row:span 2;min-height:300px}
+  .cell.hero-cell b{font-size:100px}
+  .cell.wide{grid-column:span 2}
+  .services{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .dna{grid-template-columns:repeat(3,minmax(0,1fr));gap:36px}
+  .steps{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .c-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  section.block{padding-block:104px}
+  .hero-photo{width:auto;margin-left:0;margin-top:28px;aspect-ratio:16/10;border-radius:24px}
+  .hero-photo::after{display:none}
+}
+@media (min-width:960px){
+  .hero-grid{grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:56px;align-items:center}
+  .hero-photo{order:0;border-radius:24px;margin-block:56px;aspect-ratio:1/1}
+  .hero-photo img{object-position:0% 50%}
+  .hero-photo:hover img{transform:scale(1.04)}
+  .hero-text{padding-block:72px}
+  .journey{grid-template-columns:repeat(4,minmax(0,1fr));gap:24px}
+  .journey li{border-left:0;border-top:1px solid rgba(249,181,8,.4);padding:28px 0 0 0}
+  .journey li:last-child{border-top-color:rgba(249,181,8,.4)}
+  .journey li::before{left:0;top:-7px}
+  .nav-links,.nav-cta{display:flex}
+  .nav-toggle,.nav-menu{display:none!important}
+  .steps{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .steps li{grid-template-columns:1fr;gap:12px}
+  .steps li::before{grid-row:auto}
+  .c-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .mbar{display:none}
+  body{padding-bottom:0}
+}
+@media (prefers-reduced-motion:reduce){
+  .rv,.rv.pre{transition:none;transform:none;opacity:1}
+  .hero-photo img,.cell,.svc{transition:none}
+}
+</style>
+<meta property="og:type" content="profile">
+<meta property="og:title" content="Nguyễn Quang Đạt – Đồng sáng lập Vi-Tech">
+<meta property="og:description" content="Đưa doanh nghiệp từ vận hành theo kinh nghiệm sang vận hành bằng quy trình, dữ liệu và AI.">
+<link rel="icon" type="image/png" href="assets/logo.png">
+<style>body{margin:0}[hidden]{display:none!important}img{max-width:100%}</style>
+</head>
+<body>
+<nav class="topnav" aria-label="Điều hướng">
+  <div class="wrap">
+    <div class="nav-in">
+      <a class="nav-brand off" href="#top"><span class="logo"><img src="assets/logo.png" alt="Logo Vi-Tech"></span><span>Nguyễn Quang Đạt</span></a>
+      <div class="nav-links">
+        <a href="#ve-toi">Giới thiệu</a><a href="#hanh-trinh">Hành trình</a><a href="#linh-vuc">Năng lực</a><a href="#cach-lam-viec">Cách làm việc</a><a href="#lien-he">Kết nối</a>
+      </div>
+      <a class="btn btn-gold nav-cta" style="padding:10px 18px;font-size:13.5px" href="https://zalo.me/0968273868" target="_blank" rel="noopener">Nhắn Zalo</a>
+      <button class="nav-toggle" id="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-menu" aria-label="Mở menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+    <div class="nav-menu" id="nav-menu" hidden>
+      <a href="#ve-toi">Giới thiệu</a><a href="#hanh-trinh">Hành trình</a><a href="#linh-vuc">Năng lực</a><a href="#cach-lam-viec">Cách làm việc</a><a href="#lien-he">Kết nối</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div class="hero-text">
+        <div class="brand" id="hero-brand">
+          <span class="logo"><img src="assets/logo.png" alt="Logo Vi-Tech"></span>
+          <div>
+            <div class="name">Nguyễn Quang Đạt</div>
+            <div class="role">Đồng sáng lập – Công ty TNHH Dịch vụ Giải pháp Vi-Tech</div>
+          </div>
+        </div>
+        <div class="rule" aria-hidden="true"></div>
+        <h1>Đưa doanh nghiệp từ vận hành theo kinh nghiệm sang vận hành bằng <em>quy trình, dữ liệu và AI.</em></h1>
+        <p class="lede">Tôi đồng hành cùng doanh nghiệp, đơn vị hành chính sự nghiệp và trường học trong các thủ tục số bắt buộc: Chữ ký số, Hóa đơn điện tử, Phần mềm Bảo hiểm xã hội, Phần mềm khấu trừ thuế TNCN. Song song, tôi giúp doanh nghiệp từng bước tự động hóa vận hành bằng AI.</p>
+        <div class="btns">
+          <a class="btn btn-gold" href="https://zalo.me/0968273868" target="_blank" rel="noopener">Nhắn Zalo cho tôi</a>
+          <button class="btn btn-line" type="button" data-register>Đăng ký tư vấn</button>
+          <a class="btn btn-soft" href="https://drive.google.com/file/d/1MLLqjLspUlHdWlcrBmgMdcjZ2mHHeiCh/view?usp=drive_link" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>Tải hồ sơ năng lực</a>
+        </div>
+      </div>
+      <div class="hero-photo"><img src="assets/photo.jpg" alt="Chân dung Nguyễn Quang Đạt"></div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="block" id="ve-toi">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <div class="kicker">Về tôi</div>
+        <h2>Từ kỹ sư viễn thông đến người xây hệ thống vận hành cho doanh nghiệp</h2>
+      </div>
+      <div class="about">
+        <div class="prose rv">
+          <p>Tôi là kỹ sư Điện tử Viễn thông (Đại học Bách khoa Đà Nẵng) và cử nhân Quản trị Kinh doanh (Trường Đại học Mở Hà Nội). Tám năm làm việc tại chi nhánh Viettel Đà Nẵng cho tôi nền tảng về công nghệ, giải pháp và cách đào tạo con người. Ở đó, tôi làm Kỹ sư Công nghệ thông tin, Kỹ sư dịch vụ Giải pháp, rồi phụ trách đào tạo Bán hàng và Kỹ thuật.</p>
+          <p>Trong 15 năm qua, tôi đã làm việc trực tiếp với chủ doanh nghiệp và kế toán trong lĩnh vực Chữ ký số, Hóa đơn điện tử, Phần mềm Bảo hiểm xã hội và Phần mềm khấu trừ thuế TNCN. Tôi thấy một điểm chung ở rất nhiều đơn vị: công việc chạy được nhờ kinh nghiệm của vài người. Khi người đó bận hoặc nghỉ, vận hành chậm lại.</p>
+          <p>Vì vậy, điều tôi theo đuổi bây giờ là giúp doanh nghiệp vận hành bằng <strong>quy trình, dữ liệu và AI</strong>, kết hợp phương pháp <strong>Bộ não thứ 2</strong>. Bộ não thứ 2 là cách lưu trữ và tổ chức tri thức để không phụ thuộc vào trí nhớ của cá nhân.</p>
+        </div>
+      </div>
+      <div class="bento rv">
+        <div class="cell hero-cell"><b><span class="num" data-to="15">15</span><small>NĂM</small></b><span>Chữ ký số &amp; Hóa đơn điện tử</span></div>
+        <div class="cell"><b><span class="num" data-to="8">8</span><small>NĂM</small></b><span>Tại Viettel Đà Nẵng</span></div>
+        <div class="cell"><b><span class="num" data-to="10">10</span><small>NĂM</small></b><span>Nghiên cứu đầu tư tài chính</span></div>
+        <div class="cell wide"><b><span class="num" data-to="5">5</span><small>NĂM</small></b><span>Nghiên cứu chuyên sâu về AI</span></div>
+      </div>
+      <div class="train rv">
+        <div class="train-title">Đào tạo chuyên sâu</div>
+        <div class="train-grid">
+          <div class="train-item"><span class="train-k">AI</span><p>Google, Softech, ABM và nhiều tổ chức khác tại Việt Nam</p></div>
+          <div class="train-item"><span class="train-k">Đầu tư tài chính</span><p>AFA Capital, Davinci Academy, DHE Academy</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block alt" id="hanh-trinh">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <h2>Hành trình</h2>
+      </div>
+      <ol class="journey rv">
+        <li><h3>Học vấn</h3><p>Kỹ sư Điện tử Viễn thông, Đại học Bách khoa Đà Nẵng</p><p>Cử nhân Quản trị Kinh doanh, Trường Đại học Mở Hà Nội</p></li>
+        <li><h3>Viettel Đà Nẵng (8 năm)</h3><p>Kỹ sư CNTT → Kỹ sư dịch vụ Giải pháp → Phụ trách đào tạo Bán hàng &amp; Kỹ thuật</p></li>
+        <li><h3>Vi-Tech</h3><p>Đồng sáng lập. Cung cấp Chữ ký số, Hóa đơn điện tử, Phần mềm Bảo hiểm xã hội, Phần mềm khấu trừ thuế TNCN</p></li>
+        <li class="now"><h3>Hiện nay</h3><p>Ứng dụng AI Agent vào vận hành. Mô hình tinh gọn, kết hợp mạng lưới đại lý</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="block" id="linh-vuc">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <div class="kicker">Tôi có thể giúp gì</div>
+        <h2>Ba lĩnh vực tôi đồng hành cùng anh chị</h2>
+      </div>
+      <div class="services">
+        <article class="svc rv">
+          <div class="svc-top"><span class="svc-no">01</span></div>
+          <h3>Thủ tục số cho doanh nghiệp</h3>
+          <p>Cấp mới và gia hạn Chữ ký số, Hóa đơn điện tử, Phần mềm Bảo hiểm xã hội, Phần mềm khấu trừ thuế TNCN. Dành cho hộ kinh doanh, doanh nghiệp SME, tập đoàn, cơ quan, trường học.</p>
+          <div class="gain"><b>Giúp anh chị:</b> làm đúng quy định, đúng hạn, có người hỗ trợ khi cần.</div>
+        </article>
+        <article class="svc rv">
+          <div class="svc-top"><span class="svc-no">02</span><span class="tag">Đang triển khai</span></div>
+          <h3>Tự động hóa vận hành bằng AI</h3>
+          <p>Chuẩn hóa quy trình, đưa dữ liệu vào một nơi, rồi dùng AI Agent cho các việc lặp lại như chăm sóc khách hàng qua Zalo, nhắc gia hạn, báo cáo.</p>
+          <div class="gain"><b>Giúp anh chị:</b> giảm việc thủ công, ra quyết định dựa trên dữ liệu.</div>
+        </article>
+        <article class="svc rv">
+          <div class="svc-top"><span class="svc-no">03</span><span class="tag">Sắp triển khai</span></div>
+          <h3>Đào tạo AI và kiến thức đầu tư tài chính</h3>
+          <p>Chương trình dành cho chủ doanh nghiệp và nhân sự: ứng dụng AI vào công việc, nền tảng kiến thức đầu tư tài chính.</p>
+          <div class="basis"><div class="basis-h">Nền tảng</div><ul><li><b>AI:</b> 5 năm học qua các khóa đào tạo chuyên sâu của Google, Softech, ABM và nhiều tổ chức khác tại Việt Nam.</li><li><b>Đầu tư tài chính:</b> 10 năm đầu tư, học qua các khóa đào tạo chuyên sâu tại AFA Capital, Davinci Academy, DHE Academy.</li></ul></div>
+          <div class="gain"><b>Giúp anh chị:</b> tự vận dụng được, không phụ thuộc người khác.</div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="block alt" id="cach-lam-viec">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <div class="kicker">Cách tôi làm việc</div>
+        <h2>Thực chiến · Kỷ luật · Cầu thị</h2>
+      </div>
+      <div class="dna rv">
+        <div><h3>Thực chiến</h3><p>Giải pháp phải chạy được trong điều kiện thật của doanh nghiệp, không chỉ đẹp trên giấy.</p></div>
+        <div><h3>Kỷ luật</h3><p>Đúng quy trình, đúng hạn, đúng cam kết.</p></div>
+        <div><h3>Cầu thị</h3><p>Lắng nghe trước, đề xuất sau. Mỗi doanh nghiệp một bài toán khác nhau.</p></div>
+      </div>
+      <p class="principle rv">Việc gì cũng phải <span>đo được bằng con số</span>. Dữ liệu dẫn dắt quyết định.</p>
+      <div class="steps-title">Quy trình 4 bước</div>
+      <ol class="steps rv">
+        <li><h3>Lắng nghe</h3><p>Hiểu nhu cầu và hiện trạng</p></li>
+        <li><h3>Đề xuất</h3><p>Phương án phù hợp quy mô và ngân sách</p></li>
+        <li><h3>Triển khai</h3><p>Cài đặt, hướng dẫn, chuẩn hóa</p></li>
+        <li><h3>Đồng hành</h3><p>Hỗ trợ sau triển khai, nhắc gia hạn, cải tiến</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="block" id="lien-he">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <div class="kicker">Liên hệ</div>
+        <h2>Trao đổi trực tiếp với tôi</h2>
+        <p>Anh chị cần cấp mới hoặc gia hạn Chữ ký số, Hóa đơn điện tử, hay muốn tìm hiểu cách đưa AI vào vận hành? Hãy nhắn cho tôi, tôi sẽ phản hồi sớm nhất có thể.</p>
+      </div>
+      <div class="c-grid rv">
+        <div class="c-item">
+          <span class="c-label">Điện thoại / Zalo</span>
+          <span class="c-val">0968.273.868</span>
+          <div class="c-actions">
+            <a class="mini solid" href="https://zalo.me/0968273868" target="_blank" rel="noopener">Nhắn Zalo ngay</a>
+            <a class="mini" href="tel:0968273868">Gọi điện</a>
+            <button class="mini" type="button" data-copy="0968273868">Sao chép số</button>
+          </div>
+        </div>
+        <div class="c-item">
+          <span class="c-label">Email</span>
+          <span class="c-val">aidatnq6@gmail.com</span>
+          <div class="c-actions"><button class="mini" type="button" data-copy="aidatnq6@gmail.com">Sao chép email</button></div>
+        </div>
+        <div class="c-item">
+          <span class="c-label">Facebook</span>
+          <span class="c-val">nguyenquangdat868</span>
+          <div class="c-actions"><a class="mini" href="https://www.facebook.com/nguyenquangdat868/" target="_blank" rel="noopener">Xem Facebook</a></div>
+        </div>
+        <div class="c-item">
+          <span class="c-label">Khu vực</span>
+          <span class="c-val">Đà Nẵng</span>
+          <span class="c-note">Phục vụ khách hàng toàn quốc</span>
+        </div>
+      </div>
+      <div class="btns" style="margin-top:28px">
+        <button class="btn btn-gold" type="button" data-register>Đăng ký tư vấn</button>
+        <a class="btn btn-line" href="https://drive.google.com/file/d/1MLLqjLspUlHdWlcrBmgMdcjZ2mHHeiCh/view?usp=drive_link" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>Tải hồ sơ năng lực</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer><div class="wrap foot"><span class="logo"><img src="assets/logo.png" alt="Logo Vi-Tech"></span><span>© 2026 Nguyễn Quang Đạt · Đồng sáng lập Vi-Tech</span><a href="https://www.facebook.com/nguyenquangdat868/" target="_blank" rel="noopener">Facebook</a><a href="#top">Về đầu trang ↑</a></div></footer>
+
+<nav class="mbar" aria-label="Liên hệ nhanh">
+  <a class="z" href="https://zalo.me/0968273868" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1.1-4.6A8 8 0 1 1 21 12z"/></svg>Nhắn Zalo</a>
+  <a class="c" href="tel:0968273868">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg>Gọi điện thoại</a>
+  <button class="x" id="mbar-close" type="button" aria-label="Đóng thanh liên hệ"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+</nav>
+
+<div class="sheet-bg" id="call-sheet" hidden>
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="call-title">
+    <div class="sheet-l" id="call-title">Gọi điện cho Nguyễn Quang Đạt</div>
+    <div class="sheet-n">0968.273.868</div>
+    <div class="sheet-acts">
+      <a class="s1" href="tel:0968273868" target="_blank" rel="noopener">Mở trình gọi điện</a>
+      <button class="s2" type="button" id="call-copy">Sao chép số</button>
+      <button class="s3" type="button" id="call-close">Đóng</button>
+    </div>
+    <p class="sheet-note">Nếu máy không tự mở trình gọi điện, anh chị bấm "Sao chép số" rồi dán vào ứng dụng gọi điện.</p>
+  </div>
+</div>
+
+<div class="sheet-bg" id="reg-sheet" hidden>
+  <div class="sheet reg" role="dialog" aria-modal="true" aria-labelledby="reg-title">
+    <div class="sheet-l" id="reg-title">Đăng ký tư vấn</div>
+    <form id="reg-form" novalidate>
+      <p class="form-intro">Để lại thông tin, tôi sẽ liên hệ lại với anh chị sớm nhất có thể.</p>
+      <label class="fld" for="f-name"><span>Họ và tên <i>*</i></span>
+        <input id="f-name" name="hoTen" type="text" autocomplete="name" maxlength="80" placeholder="Nguyễn Văn A" required><small></small></label>
+      <label class="fld" for="f-phone"><span>Số điện thoại <i>*</i></span>
+        <input id="f-phone" name="soDienThoai" type="tel" inputmode="tel" autocomplete="tel" maxlength="16" placeholder="09xx xxx xxx" required><small></small></label>
+      <label class="fld" for="f-email"><span>Email <i>*</i></span>
+        <input id="f-email" name="email" type="email" inputmode="email" autocomplete="email" maxlength="120" placeholder="ten@congty.vn" required><small></small></label>
+      <label class="fld" for="f-need"><span>Nhu cầu <i>*</i></span>
+        <select id="f-need" name="nhuCau" required>
+            <option value="">Chọn nhu cầu</option>
+            <option value="Chữ ký số">Chữ ký số</option>
+            <option value="Hóa đơn điện tử">Hóa đơn điện tử</option>
+            <option value="Phần mềm Bảo hiểm xã hội">Phần mềm Bảo hiểm xã hội</option>
+            <option value="Phần mềm khấu trừ thuế TNCN">Phần mềm khấu trừ thuế TNCN</option>
+            <option value="Tự động hóa vận hành bằng AI">Tự động hóa vận hành bằng AI</option>
+            <option value="Đào tạo AI và kiến thức đầu tư tài chính">Đào tạo AI và kiến thức đầu tư tài chính</option>
+            <option value="Khác">Khác</option>
+        </select><small></small></label>
+      <label class="hp" aria-hidden="true">Website<input id="f-web" name="website" type="text" tabindex="-1" autocomplete="off"></label>
+      <label class="agree" for="f-agree"><input id="f-agree" type="checkbox" required>
+        <span>Tôi đồng ý để Nguyễn Quang Đạt và Công ty TNHH Dịch vụ Giải pháp Vi-Tech sử dụng thông tin trên để liên hệ tư vấn.</span></label>
+      <p class="form-err" id="f-err" role="alert" hidden></p>
+      <div class="sheet-acts">
+        <button class="s1" type="submit" id="f-submit">Gửi đăng ký</button>
+        <button class="s3" type="button" data-reg-close>Đóng</button>
+      </div>
+    </form>
+    <div class="reg-done" id="reg-done" hidden>
+      <div class="ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
+      <h3>Đã gửi đăng ký</h3>
+      <p>Cảm ơn anh chị. Tôi sẽ liên hệ lại sớm nhất có thể. Cần trao đổi ngay, anh chị nhắn Zalo 0968.273.868.</p>
+      <div class="sheet-acts"><button class="s3" type="button" data-reg-close>Đóng</button></div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  // Menu di động
+  var tg=document.getElementById('nav-toggle'),mn=document.getElementById('nav-menu');
+  tg.addEventListener('click',function(){var o=mn.hidden;mn.hidden=!o;tg.setAttribute('aria-expanded',String(o));});
+  mn.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){mn.hidden=true;tg.setAttribute('aria-expanded','false');});});
+  // Ẩn tên trên thanh menu khi phần đầu trang còn hiển thị (tránh trùng lặp)
+  var nb=document.querySelector('.nav-brand'),hb=document.querySelector('header.hero');
+  if('IntersectionObserver' in window&&nb&&hb){
+    new IntersectionObserver(function(es){es.forEach(function(e){nb.classList.toggle('off',e.isIntersecting);});},{rootMargin:'-60px 0px 0px 0px'}).observe(hb);
+  }
+  // Bảng gọi điện (tránh mở tel: ngay trong khung trang gây lỗi)
+  var sh=document.getElementById('call-sheet'),cc=document.getElementById('call-copy'),ccl=cc.textContent;
+  function openSheet(){sh.hidden=false;document.getElementById('call-close').focus();}
+  function closeSheet(){sh.hidden=true;}
+  document.querySelectorAll('[data-call]').forEach(function(b){b.addEventListener('click',openSheet);});
+  document.getElementById('call-close').addEventListener('click',closeSheet);
+  sh.addEventListener('click',function(e){if(e.target===sh)closeSheet();});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeSheet();});
+  cc.addEventListener('click',function(){
+    function done(t){cc.textContent=t;setTimeout(function(){cc.textContent=ccl},1800)}
+    try{navigator.clipboard.writeText('0968273868').then(function(){done('Đã sao chép số')},function(){done('0968273868')})}catch(e){done('0968273868')}
+  });
+  // Đóng thanh liên hệ
+  var bar=document.querySelector('.mbar');
+  document.getElementById('mbar-close').addEventListener('click',function(){bar.hidden=true;document.body.classList.add('bar-closed');});
+  // Sao chép
+  document.querySelectorAll('[data-copy]').forEach(function(b){
+    var label=b.textContent;
+    b.addEventListener('click',function(){
+      var v=b.getAttribute('data-copy');
+      function done(t){b.textContent=t;setTimeout(function(){b.textContent=label},1800)}
+      try{navigator.clipboard.writeText(v).then(function(){done('Đã sao chép')},function(){done(v)})}catch(e){done(v)}
+    });
+  });
+
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduce||!('IntersectionObserver' in window))return;
+
+  // Đếm số tăng dần
+  function countUp(el){
+    var to=parseInt(el.getAttribute('data-to'),10),t0=null,dur=1200;
+    function step(ts){if(!t0)t0=ts;var p=Math.min((ts-t0)/dur,1);el.textContent=Math.round(to*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(step);}
+    el.textContent='0';requestAnimationFrame(step);
+  }
+
+  var vh=window.innerHeight||800;
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(!e.isIntersecting)return;
+      var el=e.target;
+      el.classList.remove('pre');
+      el.querySelectorAll('.num').forEach(countUp);
+      io.unobserve(el);
+    });
+  },{threshold:.15});
+
+  document.querySelectorAll('.rv').forEach(function(el){
+    // Chỉ làm hiệu ứng cho phần đang nằm ngoài màn hình lúc tải
+    if(el.getBoundingClientRect().top>vh){el.classList.add('pre');io.observe(el);}
+  });
+})();
+</script>
+<script type="module">
+// ===== Form Đăng ký tư vấn -> Firestore =====
+import { firebaseConfig, COLLECTION } from './js/firebase-config.js';
+
+const SDK = 'https://www.gstatic.com/firebasejs/10.12.2/';
+const sheet = document.getElementById('reg-sheet');
+const form = document.getElementById('reg-form');
+const done = document.getElementById('reg-done');
+const errBox = document.getElementById('f-err');
+const btn = document.getElementById('f-submit');
+const f = {
+  name: document.getElementById('f-name'), phone: document.getElementById('f-phone'),
+  email: document.getElementById('f-email'), need: document.getElementById('f-need'),
+  agree: document.getElementById('f-agree'), web: document.getElementById('f-web')
+};
+
+function open() { form.hidden = false; done.hidden = true; errBox.hidden = true; sheet.hidden = false; f.name.focus(); }
+function close() { sheet.hidden = true; }
+document.querySelectorAll('[data-register]').forEach(b => b.addEventListener('click', open));
+sheet.querySelectorAll('[data-reg-close]').forEach(b => b.addEventListener('click', close));
+sheet.addEventListener('click', e => { if (e.target === sheet) close(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && !sheet.hidden) close(); });
+
+// Chuẩn hóa số điện thoại VN về dạng 0xxxxxxxxx
+function normPhone(v) {
+  let d = v.replace(/\D/g, '');
+  if (d.startsWith('84') && d.length === 11) d = '0' + d.slice(2);
+  return d;
+}
+function setErr(el, msg) {
+  const box = el.closest('.fld') || el.closest('.agree');
+  box.classList.toggle('bad', !!msg);
+  const sm = box.querySelector('small'); if (sm) sm.textContent = msg || '';
+}
+function validate() {
+  const name = f.name.value.trim().replace(/\s+/g, ' ');
+  const phone = normPhone(f.phone.value);
+  const email = f.email.value.trim().toLowerCase();
+  const need = f.need.value;
+  let ok = true;
+  const chk = (el, cond, msg) => { setErr(el, cond ? '' : msg); if (!cond) ok = false; };
+  chk(f.name, name.length >= 2 && name.length <= 80, 'Vui lòng nhập họ và tên.');
+  chk(f.phone, /^0[35789]\d{8}$/.test(phone), 'Số điện thoại chưa đúng (10 số, ví dụ 0968273868).');
+  chk(f.email, /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email) && email.length <= 120, 'Email chưa đúng định dạng.');
+  chk(f.need, need !== '', 'Vui lòng chọn nhu cầu.');
+  chk(f.agree, f.agree.checked, '');
+  return ok ? { hoTen: name, soDienThoai: phone, email, nhuCau: need } : null;
+}
+[f.name, f.phone, f.email, f.need].forEach(el => el.addEventListener('input', () => setErr(el, '')));
+f.agree.addEventListener('change', () => setErr(f.agree, ''));
+
+function showError(msg) { errBox.textContent = msg; errBox.hidden = false; }
+function lastSent() { try { return Number(localStorage.getItem('reg_last') || 0); } catch (e) { return 0; } }
+function markSent() { try { localStorage.setItem('reg_last', String(Date.now())); } catch (e) {} }
+function success() { form.reset(); form.hidden = true; done.hidden = false; }
+
+let db = null;
+async function getDb() {
+  if (db) return db;
+  const { initializeApp } = await import(SDK + 'firebase-app.js');
+  const { getFirestore } = await import(SDK + 'firebase-firestore.js');
+  db = getFirestore(initializeApp(firebaseConfig));
+  return db;
+}
+
+form.addEventListener('submit', async e => {
+  e.preventDefault();
+  errBox.hidden = true;
+  const data = validate();
+  if (!data) { if (!f.agree.checked) showError('Vui lòng đánh dấu đồng ý để tôi có thể liên hệ lại.'); return; }
+  if (f.web.value) { success(); return; }                       // bot điền ô ẩn: bỏ qua, không lưu
+  if (Date.now() - lastSent() < 60000) { showError('Anh chị vừa gửi đăng ký. Vui lòng chờ 1 phút nếu muốn gửi thêm.'); return; }
+  if (!firebaseConfig.apiKey || firebaseConfig.apiKey.startsWith('DIEN_')) { showError('Biểu mẫu chưa được kết nối. Anh chị vui lòng nhắn Zalo 0968.273.868.'); return; }
+  btn.disabled = true; btn.textContent = 'Đang gửi…';
+  try {
+    const database = await getDb();
+    const { collection, addDoc, serverTimestamp } = await import(SDK + 'firebase-firestore.js');
+    await addDoc(collection(database, COLLECTION), {
+      ...data, dongY: true, nguon: 'website', trangThai: 'moi', taoLuc: serverTimestamp()
+    });
+    markSent(); success();
+  } catch (err) {
+    console.error(err);
+    showError('Chưa gửi được đăng ký. Anh chị vui lòng thử lại, hoặc nhắn Zalo 0968.273.868.');
+  } finally {
+    btn.disabled = false; btn.textContent = 'Gửi đăng ký';
+  }
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+rules_version = '2';
+
+// Quy tắc bảo mật Firestore cho website cá nhân.
+// - Khách truy cập CHỈ được tạo mới 1 đăng ký, đúng 8 trường, đúng định dạng.
+// - Không ai đọc, sửa, xóa được dữ liệu từ website. Anh Đạt xem dữ liệu trong Firebase Console.
+// - Mọi đường dẫn khác không khai báo ở đây đều bị chặn mặc định.
+// LƯU Ý: deploy file này sẽ THAY THẾ toàn bộ quy tắc hiện có của dự án.
+// Không deploy vào dự án đang chạy CRM nếu chưa gộp quy tắc của CRM vào file này.
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    match /dang_ky_tu_van/{docId} {
+      allow create: if isValidRegistration(request.resource.data);
+      allow read, update, delete: if false;
+    }
+
+    function isValidRegistration(d) {
+      let fields = ['hoTen', 'soDienThoai', 'email', 'nhuCau', 'dongY', 'nguon', 'trangThai', 'taoLuc'];
+      return d.keys().hasOnly(fields)
+        && d.keys().hasAll(fields)
+        && d.hoTen is string && d.hoTen.size() >= 2 && d.hoTen.size() <= 80
+        && d.soDienThoai is string && d.soDienThoai.matches('^0[35789][0-9]{8}$')
+        && d.email is string && d.email.size() <= 120 && d.email.matches('^[^@ ]+@[^@ ]+[.][^@ ]+$')
+        && d.nhuCau in [
+             'Chữ ký số',
+             'Hóa đơn điện tử',
+             'Phần mềm Bảo hiểm xã hội',
+             'Phần mềm khấu trừ thuế TNCN',
+             'Tự động hóa vận hành bằng AI',
+             'Đào tạo AI và kiến thức đầu tư tài chính',
+             'Khác'
+           ]
+        && d.dongY == true
+        && d.nguon == 'website'
+        && d.trangThai == 'moi'
+        && d.taoLuc == request.time;
+    }
+  }
+}

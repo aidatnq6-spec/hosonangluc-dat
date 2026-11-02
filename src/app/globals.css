@@ -1,0 +1,106 @@
+@import "tailwindcss";
+
+/* Giao diện Navy cố định (chọn có chủ đích), vàng cam làm điểm nhấn. */
+@theme {
+  --color-navy: #101a6b;
+  --color-navy-deep: #0b1459;
+  --color-navy-up: #1a2580;
+  --color-gold: #f9b508;
+  --color-gold-dark: #e8a200;
+  --color-ink: #eef0fa;
+  --color-muted: #c3c8e6;
+  --color-line: rgb(255 255 255 / 0.14);
+  --color-danger: #ffb4ab;
+
+  --font-head: var(--font-montserrat), "Segoe UI", Arial, sans-serif;
+  --font-body: var(--font-be-vietnam), "Segoe UI", Roboto, Arial, sans-serif;
+
+  /* Giữ đúng mốc màn hình của bản cũ: 720px (tablet) và 960px (desktop) */
+  --breakpoint-md: 45rem;
+  --breakpoint-lg: 60rem;
+}
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-navy text-ink font-body text-[17px] leading-[1.8] md:text-[17.5px];
+  }
+  h1,
+  h2,
+  h3 {
+    @apply font-head text-white text-balance leading-[1.35];
+  }
+  :focus-visible {
+    @apply outline-2 outline-offset-3 outline-gold rounded;
+  }
+  section,
+  header {
+    scroll-margin-top: 60px;
+  }
+}
+
+@utility wrap {
+  max-width: 1120px;
+  margin-inline: auto;
+  padding-left: max(22px, env(safe-area-inset-left, 0px));
+  padding-right: max(22px, env(safe-area-inset-right, 0px));
+}
+
+@utility pb-safe {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-transparent px-6 py-[15px] font-head text-[15px] font-semibold tracking-[.02em] no-underline cursor-pointer transition-colors duration-250;
+  }
+  .btn-gold {
+    @apply bg-gold text-navy-deep hover:bg-white;
+  }
+  .btn-line {
+    @apply border-gold/70 text-gold hover:bg-gold hover:text-navy-deep hover:border-gold;
+  }
+  .btn-soft {
+    @apply border-white/35 text-white hover:bg-white hover:text-navy-deep hover:border-white;
+  }
+  .mini {
+    @apply inline-flex items-center gap-1.5 rounded-full border border-white/35 px-4 py-2.5 font-head text-[13.5px] font-semibold text-white leading-none cursor-pointer transition-colors duration-250 hover:bg-white hover:text-navy-deep hover:border-white;
+  }
+  .mini-solid {
+    @apply bg-gold text-navy-deep border-gold hover:border-white;
+  }
+  .kicker {
+    @apply font-head text-[12.5px] font-semibold uppercase tracking-[.2em] text-gold;
+  }
+  .eyebrow {
+    @apply font-head text-[12.5px] font-semibold uppercase tracking-[.18em] text-muted;
+  }
+  .card {
+    @apply rounded-[18px] border border-line bg-navy-up transition-[transform,border-color] duration-300 hover:-translate-y-[3px] hover:border-gold/50 motion-reduce:transition-none;
+  }
+}
+
+/* Hiệu ứng hiện dần: chỉ áp dụng cho phần chưa nằm trong màn hình lúc tải */
+.rv {
+  transition:
+    transform 0.7s ease,
+    opacity 0.7s ease;
+}
+.rv.pre {
+  transform: translateY(24px);
+  opacity: 0.25;
+}
+@media (prefers-reduced-motion: reduce) {
+  .rv,
+  .rv.pre {
+    transition: none;
+    transform: none;
+    opacity: 1;
+  }
+}
