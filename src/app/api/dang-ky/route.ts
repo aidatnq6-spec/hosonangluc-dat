@@ -38,17 +38,20 @@ export async function POST(req: Request) {
     return Response.json({ error: "Không lưu được đăng ký" }, { status: 500 });
   }
 
-  // Dữ liệu đã lưu; lỗi Telegram chỉ ghi log, không báo lỗi cho khách
-  await notifyTelegram(data, id);
-  return Response.json({ ok: true, id });
+  // Dữ liệu đã lưu; lỗi Telegram không báo lỗi cho khách, chỉ ghi log và trả trạng thái để dễ kiểm tra
+  const telegram = await notifyTelegram(data, id);
+  return Response.json({ ok: true, id, telegram });
 }
 
-async function notifyTelegram(d: Registration, id: string) {
-  const token = process.env.TELEGRAM_BOT_TOKEN;
-  const chatId = process.env.TELEGRAM_CHAT_ID;
+// Bỏ khoảng trắng và dấu ngoặc kép thừa khi dán giá trị vào Vercel
+const env = (k: string) => (process.env[k] ?? "").trim().replace(/^["']|["']$/g, "");
+
+async function notifyTelegram(d: Registration, id: string): Promise<string> {
+  const token = env("TELEGRAM_BOT_TOKEN");
+  const chatId = env("TELEGRAM_CHAT_ID");
   if (!token || !chatId) {
     console.error("Thiếu TELEGRAM_BOT_TOKEN hoặc TELEGRAM_CHAT_ID trong biến môi trường");
-    return;
+    return !token ? "thieu_TELEGRAM_BOT_TOKEN" : "thieu_TELEGRAM_CHAT_ID";
   }
 
   const time = new Date().toLocaleString("vi-VN", { timeZone: "Asia/Ho_Chi_Minh" });
@@ -68,8 +71,12 @@ async function notifyTelegram(d: Registration, id: string) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ chat_id: chatId, text, parse_mode: "HTML", disable_web_page_preview: true }),
     });
-    if (!res.ok) console.error("Telegram trả lỗi", res.status, await res.text());
+    if (res.ok) return "da_gui";
+    const body = await res.text();
+    console.error("Telegram trả lỗi", res.status, body);
+    return `loi_${res.status}: ${(JSON.parse(body)?.description as string) ?? ""}`.slice(0, 200);
   } catch (err) {
     console.error("Không gửi được Telegram", err);
+    return "loi_ket_noi";
   }
 }
