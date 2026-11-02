@@ -2,30 +2,16 @@
 
 import { Check, ChevronDown, Loader2 } from "lucide-react";
 import { useEffect, useRef, useState, type FormEvent } from "react";
-import { isConfigured, lastSent, markSent, normPhone, submitRegistration } from "@/lib/registration";
+import { lastSent, markSent, submitRegistration, validateRegistration, type RegistrationErrors } from "@/lib/registration";
 import { NEEDS, PHONE_DISPLAY } from "@/lib/site";
 
-type Field = "hoTen" | "soDienThoai" | "email" | "nhuCau";
-type Errors = Partial<Record<Field | "dongY", string>>;
+type Errors = RegistrationErrors & { dongY?: string };
 
 const EMPTY = { hoTen: "", soDienThoai: "", email: "", nhuCau: "", website: "", dongY: false };
 
 function validate(v: typeof EMPTY) {
-  const data = {
-    hoTen: v.hoTen.trim().replace(/\s+/g, " "),
-    soDienThoai: normPhone(v.soDienThoai),
-    email: v.email.trim().toLowerCase(),
-    nhuCau: v.nhuCau,
-  };
-  const errors: Errors = {};
-  if (data.hoTen.length < 2 || data.hoTen.length > 80) errors.hoTen = "Vui lòng nhập họ và tên.";
-  if (!/^0[35789]\d{8}$/.test(data.soDienThoai))
-    errors.soDienThoai = "Số điện thoại chưa đúng (10 số, ví dụ 0968273868).";
-  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(data.email) || data.email.length > 120)
-    errors.email = "Email chưa đúng định dạng.";
-  if (!data.nhuCau) errors.nhuCau = "Vui lòng chọn nhu cầu.";
-  if (!v.dongY) errors.dongY = "";
-  return { data, errors };
+  const { data, errors } = validateRegistration(v);
+  return { data, errors: (v.dongY ? errors : { ...errors, dongY: "" }) as Errors };
 }
 
 const inputCls = (bad?: boolean) =>
@@ -71,12 +57,10 @@ export function RegisterDialog({ onClose }: { onClose: () => void }) {
     if (v.website) return setDone(true);
     if (Date.now() - lastSent() < 60_000)
       return setFormError("Anh chị vừa gửi đăng ký. Vui lòng chờ 1 phút nếu muốn gửi thêm.");
-    if (!isConfigured)
-      return setFormError(`Biểu mẫu chưa được kết nối. Anh chị vui lòng nhắn Zalo ${PHONE_DISPLAY}.`);
 
     setSending(true);
     try {
-      await submitRegistration(data);
+      await submitRegistration({ ...data, website: v.website });
       markSent();
       setV(EMPTY);
       setDone(true);
