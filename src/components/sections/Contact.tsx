@@ -7,14 +7,31 @@ import { Reveal } from "@/components/Reveal";
 import { Section, SectionHead } from "@/components/SectionHead";
 import { EMAIL, FACEBOOK_HANDLE, FACEBOOK_URL, PHONE, PHONE_DISPLAY, PROFILE_URL, ZALO_URL } from "@/lib/site";
 
-function Item({ icon: Icon, label, value, children }: { icon: LucideIcon; label: string; value: string; children: ReactNode }) {
+// long: giá trị dài (email, Facebook) thu nhỏ chữ ở bố cục 4 cột để nằm trên 1 dòng
+function Item({
+  icon: Icon,
+  label,
+  value,
+  long,
+  children,
+}: {
+  icon: LucideIcon;
+  label: string;
+  value: string;
+  long?: boolean;
+  children: ReactNode;
+}) {
   return (
     <div className="grid min-w-0 content-start gap-2 rounded-[18px] border border-line bg-navy-up p-[22px]">
       <span className="eyebrow flex items-center gap-2 !text-xs">
         <Icon className="size-4 text-gold" aria-hidden />
         {label}
       </span>
-      <span className="font-head text-xl leading-[1.4] font-bold wrap-anywhere text-white">{value}</span>
+      <span
+        className={`font-head text-xl leading-[1.4] font-bold wrap-anywhere text-white ${long ? "lg:text-[15px] xl:text-[17px]" : ""}`}
+      >
+        {value}
+      </span>
       {children}
     </div>
   );
@@ -42,12 +59,12 @@ export function Contact() {
             <CopyButton value={PHONE} label="Sao chép số" />
           </div>
         </Item>
-        <Item icon={Mail} label="Email" value={EMAIL}>
+        <Item icon={Mail} label="Email" value={EMAIL} long>
           <div className="mt-2 flex flex-wrap gap-2">
             <CopyButton value={EMAIL} label="Sao chép email" />
           </div>
         </Item>
-        <Item icon={Users} label="Facebook" value={FACEBOOK_HANDLE}>
+        <Item icon={Users} label="Facebook" value={FACEBOOK_HANDLE} long>
           <div className="mt-2 flex flex-wrap gap-2">
             <a className="mini" href={FACEBOOK_URL} target="_blank" rel="noopener">
               <ExternalLink className="size-3.5" aria-hidden />
